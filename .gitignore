@@ -5,11 +5,22 @@
 *.so
 *.dylib
 
-# Test binary, built with `go test -c`
+# Test binary, build with `go test -c`
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/*
+.DS_Store
+
+# binaries (created by go build on Linux/OSX)
+main
+
+# IDE specific folders
+.vscode
+
+# only ignore contents of local .idea
+.idea/*
+# but allow .idea shared run configurations
+!.idea/runConfigurations/
