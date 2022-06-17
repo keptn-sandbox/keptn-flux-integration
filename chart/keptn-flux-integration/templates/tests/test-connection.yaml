@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "keptn-flux-integration.fullname" . }}-test-connection"
+  labels:
+    {{- include "keptn-flux-integration.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "keptn-flux-integration.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

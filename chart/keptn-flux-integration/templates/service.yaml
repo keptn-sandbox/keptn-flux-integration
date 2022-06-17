@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keptn-flux-integration.fullname" . }}
+  labels:
+    {{- include "keptn-flux-integration.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "keptn-flux-integration.selectorLabels" . | nindent 4 }}

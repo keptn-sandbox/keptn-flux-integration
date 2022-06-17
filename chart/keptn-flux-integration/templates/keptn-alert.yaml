@@ -1,0 +1,17 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: {{ include "keptn-flux-integration.fullname" . }}
+spec:
+  summary: default
+  providerRef:
+    name: {{ include "keptn-flux-integration.fullname" . }}
+  eventSeverity: info
+  eventSources:
+    - kind: GitRepository
+      name: "*"
+    - kind: Kustomization
+      namespace: {{ .Values.flux.alert.namespace }}
+      name: "*"
+      matchLabels:
+        app.kubernetes.io/name: {{ .Values.flux.alert.matchLabel }}

@@ -24,3 +24,6 @@ main
 .idea/*
 # but allow .idea shared run configurations
 !.idea/runConfigurations/
+
+# Secrets
+keptn-secret.yaml
