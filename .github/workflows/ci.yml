@@ -1,4 +1,4 @@
-name: Go
+name: CI
 
 on:
   push:
@@ -26,9 +26,6 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-  push-to-dockerhub:
-    runs-on: ubuntu-latest
-    steps:
     - name: docker login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
@@ -53,3 +50,5 @@ jobs:
     - name: Docker Push
       run: |-
         docker push bradmccoydev/keptn-flux-integration:latest
+
+
