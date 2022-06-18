@@ -3,12 +3,14 @@ name: Go
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+
+permissions:
+  id-token: write
+  contents: write
 
 jobs:
 
-  build:
+  build-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -23,3 +25,31 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+  push-to-dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+    - name: Build the Docker image
+      run: |- 
+        docker build . --file Dockerfile --tag bradmccoydev/keptn-flux-integration:latest
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'bradmccoydev/keptn-flux-integration:latest'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL'
+      
+    - name: Docker Push
+      run: |-
+        docker push bradmccoydev/keptn-flux-integration:latest
