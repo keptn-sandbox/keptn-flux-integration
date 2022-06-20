@@ -1,34 +1,24 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
-	"github.com/keptn-sandbox/keptn-flux-integration/models"
+	"github.com/keptn-sandbox/keptn-flux-integration/handlers"
 )
 
-func homePage(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatalln(err)
+func handleRequests() {
+	log.Print("Starting the service...")
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("Port is not set.")
 	}
 
-	var fluxPayload models.FluxPayload
-	json.Unmarshal(body, &fluxPayload)
-
-	fmt.Println(string(body))
-
-	w.Header().Add("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(fluxPayload)
-}
-
-func handleRequests() {
-	http.HandleFunc("/", homePage)
-	log.Fatal(http.ListenAndServe(":4000", nil))
+	router := handlers.Router()
+	log.Print("The service is ready to listen and serve.")
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
 
 func main() {

@@ -34,18 +34,21 @@ spec:
           envFrom:
             - secretRef:
                 name: keptn-secret
+          env:
+            - name: PORT
+              value: {{ .Values.service.containerPort }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.containerPort }}
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /healthz
+              port: {{ .Values.service.containerPort }}
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /readyz
+              port: {{ .Values.service.containerPort }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
