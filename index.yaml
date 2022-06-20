@@ -1,0 +1,28 @@
+apiVersion: v1
+entries:
+  keptn-flux-integration:
+  - annotations:
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: support
+          url: https://github.com/keptn-sandbox/keptn-flux-integration/issues
+    apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-06-20T03:17:16.375086317Z"
+    description: A Helm chart for the Keptn Flux Integration
+    digest: 2470d2819d9ddbe84ce578628176750160ea479208382d2339d9b0673db816ac
+    home: https://keptn.sh
+    icon: https://raw.githubusercontent.com/cncf/artwork/master/projects/keptn/icon/color/keptn-icon-color.svg
+    keywords:
+    - cloud-native
+    - orchestration
+    - cd
+    - keptn
+    name: keptn-flux-integration
+    sources:
+    - https://github.com/keptn-sandbox/keptn-flux-integration
+    type: application
+    urls:
+    - https://github.com/keptn-sandbox/keptn-flux-integration/releases/download/keptn-flux-integration-0.1.0/keptn-flux-integration-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-06-20T03:17:16.375091417Z"
