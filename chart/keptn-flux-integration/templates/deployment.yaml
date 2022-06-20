@@ -36,19 +36,19 @@ spec:
                 name: keptn-secret
           env:
             - name: PORT
-              value: {{ .Values.service.containerPort }}
+              value: "80"
           ports:
             - name: http
-              containerPort: {{ .Values.service.containerPort }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: {{ .Values.service.containerPort }}
-          readinessProbe:
-            httpGet:
-              path: /readyz
-              port: {{ .Values.service.containerPort }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /healthz
+          #     port: {{ .Values.service.port }}
+          # readinessProbe:
+          #   httpGet:
+          #     path: /readyz
+          #     port: {{ .Values.service.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

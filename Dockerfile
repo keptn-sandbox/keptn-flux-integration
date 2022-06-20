@@ -39,7 +39,7 @@ RUN    apk update && apk upgrade \
 
 COPY --from=build /src/keptn-flux-integration/keptn-flux-integration /keptn-flux-integration
 RUN echo ls
-EXPOSE 8000
+EXPOSE 80
 
 # required for external tools to detect this as a go binary
 ENV GOTRACEBACK=all
