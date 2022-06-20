@@ -7,7 +7,7 @@ flux:
     matchLabel: podtato-head
     namespace: podtato-kustomize
   provider:
-    address: http://keptn-flux-integration.kube-system:8080
+    address: http://keptn-flux-integration.kube-system:8000
 
 image:
   repository: bradmccoydev/keptn-flux-integration
