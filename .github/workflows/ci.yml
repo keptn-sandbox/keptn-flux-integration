@@ -35,12 +35,12 @@ jobs:
 
     - name: Build the Docker image
       run: |- 
-        docker build . --file Dockerfile --tag bradmccoydev/keptn-flux-integration:latest
+        docker build . --file Dockerfile --tag bradmccoydev/keptn-flux-integration:${{ github.sha }}
 
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
-        image-ref: 'bradmccoydev/keptn-flux-integration:latest'
+        image-ref: 'bradmccoydev/keptn-flux-integration:${{ github.sha }}'
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
@@ -49,4 +49,4 @@ jobs:
       
     - name: Docker Push
       run: |-
-        docker push bradmccoydev/keptn-flux-integration:latest
+        docker push bradmccoydev/keptn-flux-integration:${{ github.sha }}
