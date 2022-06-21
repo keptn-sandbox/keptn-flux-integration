@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "keptn-flux-integration.fullname" . }}:{{ .Values.service.port }}']
+      args: ['keptn-flux-integration.flux-system.svc.cluster.local:{{ .Values.service.port }}']
   restartPolicy: Never

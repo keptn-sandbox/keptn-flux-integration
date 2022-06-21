@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -16,10 +15,13 @@ func home(w http.ResponseWriter, r *http.Request) {
 		log.Fatalln(err)
 	}
 
-	var fluxPayload models.FluxPayload
-	json.Unmarshal(body, &fluxPayload)
+	log.Print("Invoked the Home Endpoint...")
+	log.Print(string(body))
 
-	fmt.Println(string(body))
+	var fluxPayload models.FluxPayload
+	if err := json.Unmarshal(body, &fluxPayload); err != nil {
+		log.Print(err)
+	}
 
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
