@@ -20,7 +20,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 	var fluxPayload models.FluxPayload
 	if err := json.Unmarshal(body, &fluxPayload); err != nil {
-		log.Printf("Error Unmarshalling Json %v", err)
+		log.Print(err)
 	}
 
 	w.Header().Add("Content-Type", "application/json")
