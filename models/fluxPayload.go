@@ -11,10 +11,14 @@ type FluxPayload struct {
 		APIVersion      string `json:"apiVersion"`
 		ResourceVersion string `json:"resourceVersion"`
 	} `json:"involvedObject"`
-	Severity            string    `json:"severity"`
-	Timestamp           time.Time `json:"timestamp"`
-	Message             string    `json:"message"`
-	Reason              string    `json:"reason"`
-	ReportingController string    `json:"reportingController"`
-	ReportingInstance   string    `json:"reportingInstance"`
+	Severity  string    `json:"severity"`
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Reason    string    `json:"reason"`
+	Metadata  struct {
+		Revision string `json:"revision"`
+		Summary  string `json:"summary"`
+	} `json:"metadata"`
+	ReportingController string `json:"reportingController"`
+	ReportingInstance   string `json:"reportingInstance"`
 }
