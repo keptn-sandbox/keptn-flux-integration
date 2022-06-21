@@ -12,7 +12,7 @@ func Router() *mux.Router {
 	isReady := &atomic.Value{}
 	isReady.Store(true)
 
-	r.HandleFunc("/", home).Methods("GET")
+	r.HandleFunc("/", home).Methods("POST")
 	r.HandleFunc("/healthz", healthz)
 	r.HandleFunc("/readyz", readyz(isReady))
 	return r
