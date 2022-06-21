@@ -4,10 +4,14 @@ secretRef: keptn-secret
 
 flux:
   alert:
-    matchLabel: podtato-head
+    enabled: true
     namespace: podtato-kustomize
+    matchLabels:
+      app.kubernetes.io/name: podtato-head
+    
   provider:
-    address: http://keptn-flux-integration.kube-system:8000
+    enabled: true
+    address: http://keptn-flux-integration.flux-system.svc.cluster.local:80
 
 image:
   repository: bradmccoydev/keptn-flux-integration

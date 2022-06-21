@@ -1,3 +1,4 @@
+{{- if .Values.flux.provider.enabled -}}
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Provider
 metadata:
@@ -7,4 +8,4 @@ spec:
   address: {{ .Values.flux.provider.address }}
   secretRef:
     name: {{ .Values.secretRef }}
-  
+{{- end }}

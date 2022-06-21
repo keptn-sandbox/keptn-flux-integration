@@ -1,3 +1,4 @@
+{{- if .Values.flux.alert.enabled -}}
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
@@ -13,5 +14,8 @@ spec:
     - kind: Kustomization
       namespace: {{ .Values.flux.alert.namespace }}
       name: "*"
+      {{- with .Values.flux.alert.matchLabels }}
       matchLabels:
-        app.kubernetes.io/name: {{ .Values.flux.alert.matchLabel }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
