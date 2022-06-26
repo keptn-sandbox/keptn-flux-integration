@@ -9,8 +9,8 @@ import (
 	"github.com/keptn-sandbox/keptn-flux-integration/models"
 )
 
-func home(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
+func home(w http.ResponseWriter, request *http.Request) {
+	body, err := ioutil.ReadAll(request.Body)
 	if err != nil {
 		log.Fatalln(err)
 	}
