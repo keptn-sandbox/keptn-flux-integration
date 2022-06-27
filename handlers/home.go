@@ -9,8 +9,8 @@ import (
 	"github.com/keptn-sandbox/keptn-flux-integration/models"
 )
 
-func home(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
+func home(w http.ResponseWriter, request *http.Request) {
+	body, err := ioutil.ReadAll(request.Body)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -22,6 +22,11 @@ func home(w http.ResponseWriter, r *http.Request) {
 	if err := json.Unmarshal(body, &fluxPayload); err != nil {
 		log.Print(err)
 	}
+
+	// payload := provider.GetCloudEvent(fluxPayload.InvolvedObject.Name)
+	// if err := notifier.PostMessage("", payload); err != nil {
+	// 	log.Print(err)
+	// }
 
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

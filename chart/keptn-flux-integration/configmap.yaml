@@ -1,0 +1,44 @@
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: keptn-flux-integration
+#   labels:
+#     {{- include "keptn-flux-integration.labels" . | nindent 4 }}
+# data:
+#   url: {{ .Values.keptn.url }}
+#   body:
+#     template.keptn-outofsync: |
+#       {
+#         "data": {
+#           "configurationChange": {},
+#           "labels": {
+#           "version": "{{.app.metadata.revision}}",
+#           "servicename": "{{.app.metadata.name}}",
+#           },
+#           "project": "{{.involvedObject.namespace}}",
+#           "service": "{{.involvedObject.name}}",
+#           "stage": "{{.app.metadata.labels.stage}}"
+#         },
+#         "source": "keptn-flux-integration",
+#         "specversion": "1.0",
+#         "type": "sh.keptn.event.dev.artifact-delivery.triggered",
+#         "shkeptnspecversion": "0.2.3"
+#       }
+#     template.keptn-deployed: |
+#       {
+#         "data": {
+#           "configurationChange": {},
+#           "labels": {
+#           "version": "{{.app.status.sync.revision}}",
+#           "servicename": "{{.app.metadata.name}}"
+#           },
+#           "project": "{{.app.metadata.labels.keptnProject}}",
+#           "service": "{{.app.metadata.labels.keptnService}}",
+#           "stage": "{{.app.metadata.labels.stage}}",
+#           "result": "pass"
+#         },
+#         "source": "argocd",
+#         "specversion": "1.0",
+#         "type": "sh.keptn.event.deliver.finished",
+#         "shkeptnspecversion": "0.2.3",
+#       }
