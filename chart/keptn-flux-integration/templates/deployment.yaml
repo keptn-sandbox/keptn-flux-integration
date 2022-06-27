@@ -35,7 +35,7 @@ spec:
             - secretRef:
                 name: keptn-secret
           env:
-            - name: KETPN_FLUX_INTEGRATION_PORT
+            - name: KEPTN_FLUX_INTEGRATION_PORT
               value: "80"
             - name: FLUX_NAMESPACE
               value: {{ .Values.flux.namespace }}

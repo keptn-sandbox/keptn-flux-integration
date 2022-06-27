@@ -16,7 +16,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
-func GetProviderPayload(name string) string {
+func GetCloudEvent(name string) string {
 	namespace := os.Getenv("FLUX_NAMESPACE")
 	group := os.Getenv("PROVIDER_GROUP")
 	version := os.Getenv("PROVIDER_VERSION")

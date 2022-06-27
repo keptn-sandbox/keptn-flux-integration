@@ -13,7 +13,7 @@ func handleRequests() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	log.Print("Starting the service...")
 
-	port := os.Getenv("KETPN_FLUX_INTEGRATION_PORT")
+	port := os.Getenv("KEPTN_FLUX_INTEGRATION_PORT")
 	if port == "" {
 		log.Fatal("Port is not set.")
 	}

@@ -27,3 +27,4 @@ main
 
 # Secrets
 keptn-secret.yaml
+manifests.yaml
