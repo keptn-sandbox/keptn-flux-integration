@@ -20,6 +20,14 @@ flux:
     matchLabels:
       app.kubernetes.io/name: podtato-head
     integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
+  - name: keptn
+    namespace: keptn
+    kind: HelmRelease
+    labels:
+      keptnProject: keptn
+      keptnService: keptn
+      keptnStage: dev
+    integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
 
 keptn:
   install: false
