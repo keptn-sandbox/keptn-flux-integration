@@ -14,7 +14,8 @@ func TestGetProvider(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		payload := GetCloudEvent(tc.name)
-		fmt.Println(payload)
+		// payload := GetCloudEvent(tc.name)
+		// fmt.Println(payload)
+		fmt.Println(tc.name)
 	}
 }
