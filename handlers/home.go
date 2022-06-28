@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/keptn-sandbox/keptn-flux-integration/models"
+	"github.com/keptn-sandbox/keptn-flux-integration/pkg/provider"
 )
 
 func home(w http.ResponseWriter, request *http.Request) {
@@ -15,7 +16,7 @@ func home(w http.ResponseWriter, request *http.Request) {
 		log.Fatalln(err)
 	}
 
-	log.Print("Invoked the Home Endpoint...")
+	log.Print("*************")
 	log.Print(string(body))
 
 	var fluxPayload models.FluxPayload
@@ -23,7 +24,8 @@ func home(w http.ResponseWriter, request *http.Request) {
 		log.Print(err)
 	}
 
-	// payload := provider.GetCloudEvent(fluxPayload.InvolvedObject.Name)
+	payload := provider.GetCloudEvent(fluxPayload.InvolvedObject.Name)
+	log.Print(payload)
 	// if err := notifier.PostMessage("", payload); err != nil {
 	// 	log.Print(err)
 	// }

@@ -20,7 +20,7 @@ flux:
     matchLabels:
       app.kubernetes.io/name: podtato-head
     integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
-  - name: keptn
+  - name: keptn-ortelius-service
     namespace: keptn
     kind: HelmRelease
     labels:
@@ -38,7 +38,7 @@ keptn:
 image:
   repository: bradmccoydev/keptn-flux-integration
   pullPolicy: Always
-  tag: "f4a5490d2cd8f1e9311f0db57a718503391aa584"
+  tag: "a66feb3f1450096752b51cd86eb8a7cd55188ad7"
 
 imagePullSecrets: []
 nameOverride: ""
