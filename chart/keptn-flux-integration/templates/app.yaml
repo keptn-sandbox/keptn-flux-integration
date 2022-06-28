@@ -31,4 +31,30 @@ spec:
   address: {{ .integrationUrl }}
   secretRef:
     name: {{ .name }}-{{ .namespace }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .name }}-{{ .namespace }}
+stringData:
+  address: {{ .integrationUrl }}
+  headers: |
+     Content-Type: application/json
+     Accept: application/json
+  body: |
+    {
+      "data": {
+        "configurationChange": {},
+        "labels": {
+          "servicename": "{{.keptnService}}",
+        },
+        "project": "{{.keptnProject}}",
+        "service": "{{.keptnService}}",
+        "stage": "{{.keptnStage}}"
+      },
+      "source": "flux",
+      "specversion": "1.0",
+      "type": "sh.keptn.event.dev.artifact-delivery.triggered",
+      "shkeptnspecversion": "0.2.3"
+    }
 {{- end }}
