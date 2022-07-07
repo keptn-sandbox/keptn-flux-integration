@@ -3,32 +3,32 @@ package handlers
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 
-	"github.com/keptn-sandbox/keptn-flux-integration/models"
+	log "github.com/sirupsen/logrus"
+
+	"github.com/keptn-sandbox/keptn-flux-integration/pkg/notifier"
 	"github.com/keptn-sandbox/keptn-flux-integration/pkg/provider"
 )
 
 func home(w http.ResponseWriter, request *http.Request) {
 	body, err := ioutil.ReadAll(request.Body)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Could not read request body: %s", err)
 	}
 
-	log.Print("*************")
-	log.Print(string(body))
+	//log.Print(string(body))
 
-	var fluxPayload models.FluxPayload
+	var fluxPayload provider.FluxPayload
 	if err := json.Unmarshal(body, &fluxPayload); err != nil {
-		log.Print(err)
+		log.Errorf("Error unmarshalling flux payload: %s", err)
 	}
 
-	payload := provider.GetCloudEvent(fluxPayload.InvolvedObject.Name)
-	log.Print(payload)
-	// if err := notifier.PostMessage("", payload); err != nil {
-	// 	log.Print(err)
-	// }
+	event := provider.GetCloudEvent(fluxPayload.InvolvedObject.Name)
+
+	if err := notifier.PostMessage(event); err != nil {
+		log.Errorf("Error sending event, payload %s error: %s", event, err)
+	}
 
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

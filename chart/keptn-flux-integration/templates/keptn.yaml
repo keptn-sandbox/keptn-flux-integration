@@ -31,7 +31,8 @@ spec:
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: keptn
+        name: ingress-nginx
       version: {{ .Values.keptn.version }}
   interval: 5m0s
+---
 {{- end }}

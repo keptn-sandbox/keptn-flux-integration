@@ -36,7 +36,9 @@ spec:
                 name: keptn-secret
           env:
             - name: KEPTN_FLUX_INTEGRATION_PORT
-              value: "80"
+              value: "80" #TODO: use value service.port but cast as string
+            - name: KEPTN_URL
+              value: {{ .Values.keptn.url }}
             - name: FLUX_NAMESPACE
               value: {{ .Values.flux.namespace }}
             - name: FLUX_PROVIDER_GROUP

@@ -40,7 +40,7 @@ stringData:
   address: {{ .integrationUrl }}
   headers: |
      Content-Type: application/json
-     Accept: application/json
+     x-token: update-your-keptn-token-here
   body: |
     {
       "data": {
@@ -54,7 +54,7 @@ stringData:
       },
       "source": "flux",
       "specversion": "1.0",
-      "type": "sh.keptn.event.dev.artifact-delivery.triggered",
+      "type": "{{.keptnType}}",
       "shkeptnspecversion": "0.2.3"
     }
 {{- end }}

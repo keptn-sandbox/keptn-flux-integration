@@ -1,16 +1,16 @@
 package notifier
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
+	"github.com/keptn-sandbox/keptn-flux-integration/pkg/provider"
 )
 
-func PostMessage(address string, payload string) error {
+func PostMessage(event provider.KeptnEvent) error {
 	httpClient := retryablehttp.NewClient()
 
 	httpClient.HTTPClient.Timeout = 15 * time.Second
@@ -19,17 +19,24 @@ func PostMessage(address string, payload string) error {
 	httpClient.RetryMax = 4
 	httpClient.Logger = nil
 
-	data, err := json.Marshal(payload)
-	if err != nil {
-		return fmt.Errorf("marshalling notification payload failed: %w", err)
-	}
+	// data, err := json.Marshal(event.Body)
+	// fmt.Println("*****")
+	// fmt.Println(event.Body)
+	// fmt.Println("*****")
+	// if err != nil {
+	// 	return fmt.Errorf("marshalling notification payload failed: %w", err)
+	// }
 
-	req, err := retryablehttp.NewRequest(http.MethodPost, address, data)
+	req, err := retryablehttp.NewRequest(http.MethodPost, event.Address, event.Body)
 	if err != nil {
 		return fmt.Errorf("failed to create a new request: %w", err)
 	}
 
-	req.Header.Set("Content-Type", "application/json")
+	for k, v := range event.Headers {
+		headerKey := fmt.Sprintf("%s", k)
+		headerValue := fmt.Sprintf("%s", v)
+		req.Header.Set(headerKey, headerValue)
+	}
 
 	resp, err := httpClient.Do(req)
 	if err != nil {

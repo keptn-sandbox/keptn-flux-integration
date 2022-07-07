@@ -4,23 +4,52 @@ import (
 	"bytes"
 	"context"
 	"os"
+	"time"
 
 	texttemplate "text/template"
 
 	log "github.com/sirupsen/logrus"
+	"gopkg.in/yaml.v2"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
 	ctrl "sigs.k8s.io/controller-runtime"
 )
 
-func GetCloudEvent(name string) string {
+type KeptnEvent struct {
+	Address string                      `json:"address"`
+	Headers map[interface{}]interface{} `json:"headers"`
+	Body    string                      `json:"body"`
+}
+
+type FluxPayload struct {
+	InvolvedObject struct {
+		Kind            string `json:"kind"`
+		Namespace       string `json:"namespace"`
+		Name            string `json:"name"`
+		UID             string `json:"uid"`
+		APIVersion      string `json:"apiVersion"`
+		ResourceVersion string `json:"resourceVersion"`
+	} `json:"involvedObject"`
+	Severity  string    `json:"severity"`
+	Timestamp time.Time `json:"timestamp"`
+	Message   string    `json:"message"`
+	Reason    string    `json:"reason"`
+	Metadata  struct {
+		Revision string `json:"revision"`
+		Summary  string `json:"summary"`
+	} `json:"metadata"`
+	ReportingController string `json:"reportingController"`
+	ReportingInstance   string `json:"reportingInstance"`
+}
+
+func GetCloudEvent(name string) KeptnEvent {
+	// Flux Provider CRD Details
 	namespace := os.Getenv("FLUX_NAMESPACE")
-	group := os.Getenv("PROVIDER_GROUP")
-	version := os.Getenv("PROVIDER_VERSION")
-	resource := os.Getenv("PROVIDER_RESOURCE")
+	group := os.Getenv("FLUX_PROVIDER_GROUP")
+	version := os.Getenv("FLUX_PROVIDER_VERSION")
+	resource := os.Getenv("FLUX_PROVIDER_RESOURCE")
 
 	ctx := context.Background()
 	config := ctrl.GetConfigOrDie()
@@ -39,24 +68,6 @@ func GetCloudEvent(name string) string {
 		log.Errorf("Error getting Provider: %s", err)
 	}
 
-	template := GetTemplateFromSecret(config, ctx, name, namespace)
-	var b bytes.Buffer
-
-	tmpl, err := texttemplate.New("labels").Parse(template)
-	if err != nil {
-		log.Errorf("Error parsing template: %s", err)
-	}
-
-	if err := tmpl.Execute(&b, provider.GetLabels()); err != nil {
-		log.Errorf("Error replacing template: %s", err)
-	}
-
-	return b.String()
-}
-
-func GetTemplateFromSecret(config *rest.Config, ctx context.Context,
-	name string, namespace string) string {
-
 	clientset := kubernetes.NewForConfigOrDie(config)
 	secret, err := clientset.CoreV1().Secrets(namespace).
 		Get(ctx, name, metav1.GetOptions{})
@@ -65,13 +76,37 @@ func GetTemplateFromSecret(config *rest.Config, ctx context.Context,
 		log.Errorf("Error getting Secret list: %s", err)
 	}
 
+	var keptnEvent KeptnEvent
+	keptnEvent.Address = os.Getenv("KEPTN_URL")
+
 	var template string
 	for k, v := range secret.Data {
 		switch k {
 		case "body":
 			template = string(v)
+		case "headers":
+			headers := make(map[interface{}]interface{})
+			err := yaml.Unmarshal(v, &headers)
+
+			if err != nil {
+				log.Errorf("Error parsing headers: %s", err)
+			}
+
+			keptnEvent.Headers = headers
 		}
 	}
 
-	return template
+	tmpl, err := texttemplate.New("labels").Parse(template)
+	if err != nil {
+		log.Errorf("Error parsing template: %s", err)
+	}
+
+	var b bytes.Buffer
+	if err := tmpl.Execute(&b, provider.GetLabels()); err != nil {
+		log.Errorf("Error replacing template: %s", err)
+	}
+
+	keptnEvent.Body = b.String()
+
+	return keptnEvent
 }
