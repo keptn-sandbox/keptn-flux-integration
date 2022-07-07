@@ -4,11 +4,13 @@ secretRef: keptn-secret
 
 flux:
   namespace: flux-system
+
   provider:
     groupVersionResource:
       group: notification.toolkit.fluxcd.io
       version: v1beta1
       resource: providers
+
   apps:
   - name: podtato-head
     namespace: podtato-kustomize
@@ -16,7 +18,8 @@ flux:
     labels:
       keptnProject: flux-demo
       keptnService: podtato-head
-      keptnStage: dev  
+      keptnStage: dev
+      keptnType: sh.keptn.event.test.delivery.triggered  
     matchLabels:
       app.kubernetes.io/name: podtato-head
     integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
@@ -27,18 +30,18 @@ flux:
       keptnProject: keptn
       keptnService: keptn
       keptnStage: dev
+      keptnType: sh.keptn.event.test.delivery.triggered
     integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
 
 keptn:
   install: false
   version: 0.16.0
   url: https://keptn.ortelius.io/api/v1/event
-  configMap: keptn-flux-integration
 
 image:
   repository: bradmccoydev/keptn-flux-integration
   pullPolicy: Always
-  tag: "a66feb3f1450096752b51cd86eb8a7cd55188ad7"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
