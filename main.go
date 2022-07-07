@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/keptn-sandbox/keptn-flux-integration/handlers"
 	"github.com/sirupsen/logrus"
@@ -12,7 +13,7 @@ func handleRequests() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	log.Print("Starting the service...")
 
-	port := "80" //os.Getenv("KEPTN_FLUX_INTEGRATION_PORT")
+	port := os.Getenv("KEPTN_FLUX_INTEGRATION_PORT")
 	if port == "" {
 		log.Fatal("Port is not set.")
 	}
