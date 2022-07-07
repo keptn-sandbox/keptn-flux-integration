@@ -46,7 +46,7 @@ stringData:
       "data": {
         "configurationChange": {},
         "labels": {
-          "servicename": "{{.keptnService}}",
+          "servicename": "{{.keptnService}}"
         },
         "project": "{{.keptnProject}}",
         "service": "{{.keptnService}}",
