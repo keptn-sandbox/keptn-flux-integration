@@ -4,8 +4,8 @@ description: A Helm chart for the Keptn Flux Integration
 
 type: application
 
-version: 0.16.0
-appVersion: "0.16.0"
+version: 0.16.1
+appVersion: "0.16.1"
 
 home: "https://keptn.sh"
 icon: "https://raw.githubusercontent.com/cncf/artwork/master/projects/keptn/icon/color/keptn-icon-color.svg"
