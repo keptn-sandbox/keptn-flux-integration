@@ -16,21 +16,12 @@ flux:
     namespace: podtato-kustomize
     kind: Kustomization
     labels:
-      keptnProject: flux-demo
+      keptnProject: gsoc
       keptnService: podtato-head
-      keptnStage: dev
-      keptnType: sh.keptn.event.test.delivery.triggered  
+      keptnStage: qa
+      keptnType: sh.keptn.event.qa.delivery.triggered 
     matchLabels:
       app.kubernetes.io/name: podtato-head
-    integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
-  - name: keptn-ortelius-service
-    namespace: keptn
-    kind: HelmRelease
-    labels:
-      keptnProject: keptn
-      keptnService: keptn
-      keptnStage: dev
-      keptnType: sh.keptn.event.test.delivery.triggered
     integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
 
 keptn:

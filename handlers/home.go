@@ -17,7 +17,7 @@ func home(w http.ResponseWriter, request *http.Request) {
 		log.Fatalf("Could not read request body: %s", err)
 	}
 
-	//log.Print(string(body))
+	log.Printf("Flux Payload Received: %s", string(body))
 
 	var fluxPayload provider.FluxPayload
 	if err := json.Unmarshal(body, &fluxPayload); err != nil {
