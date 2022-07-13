@@ -41,3 +41,35 @@ helm repo add keptn-flux-integration https://keptn-sandbox.github.io/keptn-flux-
 ```bash
 helm install keptn-flux-integration --set keptn.url=https://keptn.ortelius.io/api/v1/event -n flux-system
 ```
+```yaml
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: podtato-head-podtato-kustomize
+spec:
+  summary: default
+  providerRef:
+    name: podtato-head-podtato-kustomize
+  eventSeverity: info
+  eventSources:
+    - kind: Kustomization
+      namespace: podtato-kustomize
+      name: podtato-head
+      matchLabels:
+        app.kubernetes.io/name: podtato-head
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Provider
+metadata:
+  name: podtato-head-podtato-kustomize
+  labels:
+    keptnProject: gsoc
+    keptnService: podtato-head
+    keptnStage: qa
+    keptnType: sh.keptn.event.qa.delivery.triggered
+spec:
+  type: generic
+  address: http://keptn-flux-integration.flux-system.svc.cluster.local:80
+  secretRef:
+    name: podtato-head-podtato-kustomize
+```
