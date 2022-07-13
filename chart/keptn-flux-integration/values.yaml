@@ -41,7 +41,7 @@ fullnameOverride: ""
 serviceAccount:
   create: true
   annotations: {}
-  name: ""
+  name: "keptn-flux-integration"
 
 podAnnotations: {}
 

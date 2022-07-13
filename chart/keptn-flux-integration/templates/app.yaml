@@ -7,16 +7,11 @@ metadata:
 spec:
   summary: default
   providerRef:
-    name: {{ .name }}-{{ .namespace }}
+    name: '*'
   eventSeverity: info
   eventSources:
     - kind: {{ .kind }}
-      namespace: {{ .namespace }}
       name: {{ .name }}
-      {{- with .matchLabels }}
-      matchLabels:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
 ---
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Provider
