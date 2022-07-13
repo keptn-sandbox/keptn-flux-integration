@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/keptn-sandbox/keptn-flux-integration/pkg/provider"
@@ -12,7 +13,9 @@ import (
 func PostMessage(event provider.KeptnEvent) error {
 	var jsonStr = []byte(event.Body)
 	req, err := http.NewRequest("POST", event.Address, bytes.NewBuffer(jsonStr))
-	fmt.Println(string(jsonStr))
+
+	log.Printf("Cloud Event: %s", jsonStr)
+
 	for k, v := range event.Headers {
 		headerKey := fmt.Sprintf("%s", k)
 		headerValue := fmt.Sprintf("%s", v)

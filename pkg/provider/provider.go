@@ -77,7 +77,10 @@ func GetCloudEvent(name string) KeptnEvent {
 	}
 
 	var keptnEvent KeptnEvent
+	keptnURL := os.Getenv("KEPTN_URL")
 	keptnEvent.Address = os.Getenv("KEPTN_URL")
+
+	log.Printf("Using Keptn URL: %s", keptnURL)
 
 	var template string
 	for k, v := range secret.Data {
