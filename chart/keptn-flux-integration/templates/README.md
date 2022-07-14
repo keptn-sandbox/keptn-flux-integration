@@ -37,10 +37,17 @@ stringData:
 helm repo add keptn-flux-integration https://keptn-sandbox.github.io/keptn-flux-integration
 ```
 
+Update if required
+```bash
+helm repo update keptn-flux-integration
+```
+
 ### 3. Install Helm Chart
 ```bash
 helm install keptn-flux-integration --set keptn.url=https://keptn.ortelius.io/api/v1/event -n flux-system
 ```
+
+### 4. Create Flux Alert and Provider
 ```yaml
 apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
@@ -73,3 +80,29 @@ spec:
   secretRef:
     name: podtato-head-podtato-kustomize
 ```
+
+### 5. Keptn - Create Project gsoc 
+
+```yaml
+apiVersion: "spec.keptn.sh/0.2.2"
+kind: "Shipyard"
+metadata:
+  name: "shipyard-delivery"
+spec:
+  stages:
+    - name: "qa"
+      sequences:
+        - name: "delivery"
+          tasks:
+            - name: "je-deployment"
+            - name: "je-test"
+    - name: "production"
+      sequences:
+        - name: "delivery"
+          triggeredOn:
+            - event: "qa.delivery.finished"
+          tasks:
+            - name: "je-deployment"
+```
+
+### 6. Create Service podtato-head
