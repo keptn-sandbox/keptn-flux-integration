@@ -61,6 +61,12 @@ func GetCloudEvent(name string) KeptnEvent {
 		Resource: resource,
 	}
 
+	log.Printf("Using Keptn group: %s", group)
+	log.Printf("Using Keptn version: %s", version)
+	log.Printf("Using Keptn resource: %s", resource)
+	log.Printf("Using Keptn name: %s", name)
+	log.Printf("Using Keptn namespace: %s", namespace)
+
 	provider, err := dynamic.Resource(resourceId).Namespace(namespace).
 		Get(ctx, name, metav1.GetOptions{})
 
