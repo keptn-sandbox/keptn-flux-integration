@@ -11,18 +11,20 @@ flux:
       version: v1beta1
       resource: providers
 
-  apps:
-  - name: podtato-head
-    namespace: podtato-kustomize
-    kind: Kustomization
-    labels:
-      keptnProject: gsoc
-      keptnService: podtato-head
-      keptnStage: qa
-      keptnType: sh.keptn.event.qa.delivery.triggered 
-    matchLabels:
-      app.kubernetes.io/name: podtato-head
-    integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
+  demo:
+    enabled: false
+    apps:
+    - name: podtato-head
+      namespace: podtato-kustomize
+      kind: Kustomization
+      labels:
+        keptnProject: gsoc
+        keptnService: podtato-head
+        keptnStage: qa
+        keptnType: sh.keptn.event.qa.delivery.triggered 
+      matchLabels:
+        app.kubernetes.io/name: podtato-head
+      integrationUrl: http://keptn-flux-integration.flux-system.svc.cluster.local:80
 
 keptn:
   install: false
