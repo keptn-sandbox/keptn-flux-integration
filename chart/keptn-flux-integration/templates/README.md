@@ -1,5 +1,21 @@
 # Installation
 
+### 1. Bootstrap flux (skip if you have already)
+
+In order to bootstrap flux you will need to download the cli and have a GitHub Token.
+
+```bash
+export GITHUB_TOKEN=<your-gh-token-here>
+```
+
+```bash
+flux bootstrap github \
+--owner=bradmccoydev \
+--repository=flux-demo \
+--path=clusters/gitops \
+--personal
+```
+
 ### 1. Add your Keptn Cloud Event details in Secret
 The secret is linked to the flux provider it contains the url to the keptn-flux-integration application, the keptn headers required for the cloud event, and the event itself. We are using Go Templating so the key value pairs will be passed and applied through labels in the flux provider. 
 
