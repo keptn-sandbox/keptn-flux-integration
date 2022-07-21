@@ -24,10 +24,12 @@ func home(w http.ResponseWriter, request *http.Request) {
 		log.Errorf("Error unmarshalling flux payload: %s", err)
 	}
 
-	event := provider.GetCloudEvent(fluxPayload.InvolvedObject.Name, fluxPayload.InvolvedObject.Namespace)
+	if fluxPayload.Message == "Helm install succeeded" {
+		event := provider.GetCloudEvent(fluxPayload.InvolvedObject.Name, fluxPayload.InvolvedObject.Namespace)
 
-	if err := notifier.PostMessage(event); err != nil {
-		log.Errorf("Error sending event, payload %s error: %s", event, err)
+		if err := notifier.PostMessage(event); err != nil {
+			log.Errorf("Error sending event, payload %s error: %s", event, err)
+		}
 	}
 
 	w.Header().Add("Content-Type", "application/json")
