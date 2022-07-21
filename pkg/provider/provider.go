@@ -44,9 +44,8 @@ type FluxPayload struct {
 	ReportingInstance   string `json:"reportingInstance"`
 }
 
-func GetCloudEvent(name string) KeptnEvent {
+func GetCloudEvent(name string, namespace string) KeptnEvent {
 	// Flux Provider CRD Details
-	namespace := os.Getenv("FLUX_NAMESPACE")
 	group := os.Getenv("FLUX_PROVIDER_GROUP")
 	version := os.Getenv("FLUX_PROVIDER_VERSION")
 	resource := os.Getenv("FLUX_PROVIDER_RESOURCE")
