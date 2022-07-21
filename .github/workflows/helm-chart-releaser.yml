@@ -6,8 +6,8 @@ on:
       - "main"
     paths:
       - 'chart/**'
-    paths-ignore:
-      - 'chart/keptn-flux-integration/templates/README.md'
+      - '!chart/keptn-flux-integration/templates/README.md'
+    paths-ignore:  
 
 jobs:
   release:
