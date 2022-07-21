@@ -17,7 +17,13 @@ flux bootstrap github \
 ```
 
 ### 1. Add your Keptn Cloud Event details in Secret
-The secret is linked to the flux provider it contains the url to the keptn-flux-integration application, the keptn headers required for the cloud event, and the event itself. We are using Go Templating so the key value pairs will be passed and applied through labels in the flux provider. 
+The secret is linked to the flux provider it contains the url to the keptn-flux-integration application, the keptn headers required for the cloud event, and the event itself. We are using Go Templating so the key value pairs will be passed and applied through labels in the flux provider.
+
+Replace the Keptn API token below, you can get it here:
+
+```bash
+kubectl get secret -n keptn keptn-api-token -o jsonpath="{.data.keptn-api-token}" | base64 --decode
+```
 
 ```yaml
 apiVersion: v1
@@ -76,6 +82,8 @@ spec:
     name: podtato-head-podtato-kustomize
   eventSeverity: info
   eventSources:
+    - kind: HelmRelease
+      name: "*"
     - kind: Kustomization
       name: "podtato-head-podtato-kustomize"
       namespace: podtato-kustomize

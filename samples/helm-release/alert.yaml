@@ -1,0 +1,14 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: keptn-flux-integration
+  namespace: flux-system
+spec:
+  summary: default
+  providerRef:
+    name: keptn-flux-integration
+  eventSeverity: info
+  eventSources:
+    - kind: HelmRelease
+      name: "*"
+      

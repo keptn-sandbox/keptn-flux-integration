@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: keptn-flux-integration
+  namespace: flux-system
+spec:
+  interval: 2m0s
+  timeout: 120s
+  url: https://keptn-sandbox.github.io/keptn-flux-integration

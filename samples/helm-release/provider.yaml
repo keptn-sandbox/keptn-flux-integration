@@ -1,0 +1,15 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Provider
+metadata:
+  name: keptn-flux-integration
+  namespace: flux-system
+  labels:
+    keptnProject: gsoc
+    keptnService: podtato-head
+    keptnStage: qa
+    keptnType: sh.keptn.event.qa.delivery.triggered
+spec:
+  type: generic
+  address: http://keptn-flux-integration.flux-system.svc.cluster.local:80
+  secretRef:
+    name: keptn-flux-integration
