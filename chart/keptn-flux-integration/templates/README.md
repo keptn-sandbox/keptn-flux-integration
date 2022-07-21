@@ -60,7 +60,7 @@ helm repo update keptn-flux-integration
 
 ### 3. Install Helm Chart
 ```bash
-helm install keptn-flux-integration --set keptn.url=https://keptn.ortelius.io/api/v1/event -n flux-system
+helm install keptn-flux-integration keptn-flux-integration/keptn-flux-integration --set keptn.url=https://keptn.ortelius.io/api/v1/event -n flux-system
 ```
 
 ### 4. Create Flux Alert and Provider
@@ -69,6 +69,7 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
   name: podtato-head-podtato-kustomize
+  namespace: podtato-kustomize
 spec:
   summary: default
   providerRef:
@@ -76,8 +77,8 @@ spec:
   eventSeverity: info
   eventSources:
     - kind: Kustomization
+      name: "podtato-head-podtato-kustomize"
       namespace: podtato-kustomize
-      name: podtato-head
       matchLabels:
         app.kubernetes.io/name: podtato-head
 ---
@@ -85,6 +86,7 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Provider
 metadata:
   name: podtato-head-podtato-kustomize
+  namespace: podtato-kustomize
   labels:
     keptnProject: gsoc
     keptnService: podtato-head
@@ -122,3 +124,4 @@ spec:
 ```
 
 ### 6. Create Service podtato-head
+Create Service in Keptn UI which is the same as the provider labels in line 101 above
