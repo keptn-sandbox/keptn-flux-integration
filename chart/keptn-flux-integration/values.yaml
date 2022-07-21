@@ -1,3 +1,6 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 replicaCount: 1
 
 secretRef: keptn-secret
@@ -34,23 +37,23 @@ keptn:
 image:
   repository: bradmccoydev/keptn-flux-integration
   pullPolicy: Always
-  tag: "latest"
+  tag: "latest"                         # Overrides the image tag whose default is the chart appVersion
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  create: true
-  annotations: {}
-  name: "keptn-flux-integration"
+  create: true                          # Specifies whether a service account should be created
+  annotations: {}                       # Annotations to add to the service account
+  name: "keptn-flux-integration"        # The name of the service account to use (if not set and create is true, a name is generated using the fullname template)
 
-podAnnotations: {}
+podAnnotations: {}                      # Annotations to add to the created pods
 
-podSecurityContext: {}
+podSecurityContext: {}                  # Set the pod security context
   # fsGroup: 2000
 
-securityContext: {}
+securityContext: {}                     # Set the security context
   # capabilities:
   #   drop:
   #   - ALL
@@ -90,8 +93,8 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-nodeSelector: {}
+nodeSelector: {}                        # Node selector configuration
 
-tolerations: []
+tolerations: []                         # Tolerations for the pods
 
-affinity: {}
+affinity: {}                            # Affinity rules
